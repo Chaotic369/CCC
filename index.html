@@ -34,14 +34,22 @@
                                         }
 
                         .row-number {
-                            flex: 1;
-                            display: flex;
-                            align-items: center;
-                            justify-content: center;
-                            color: grey;
-                            font-size: min(1vw, 1.2vh);
-                            font-family: sans-serif;
-                        }
+                                            flex: 1;
+                                            display: flex;
+                                            align-items: center;
+                                            justify-content: center;
+                                            color: grey;
+                                            font-size: min(1vw, 1.2vh);
+                                            font-family: sans-serif;
+                                            box-sizing: border-box;
+                                            border-bottom: 1px solid grey;
+                                            border-right: 1px solid grey;
+                                            background-color: #000000;
+                                        }
+                
+                                        .row-number:first-child {
+                                            border-top: 1px solid grey;
+                                        }
 
                 /* The new text flash overlay */
                 #flash-text {
@@ -94,17 +102,32 @@
                                                                 }
 
                                 /* Analysis Log Container */
-                                #analysis-panel {
-                                    width: 100%;
-                                    flex-grow: 1;
-                                    padding: 10px;
-                                    box-sizing: border-box;
-                                    overflow-y: auto;
-                                    font-size: 13px;
-                                    display: flex;
-                                    flex-direction: column;
-                                    gap: 6px;
-                                }
+                                                #analysis-panel {
+                                                    width: 100%;
+                                                    flex-grow: 1;
+                                                    padding: 10px;
+                                                    box-sizing: border-box;
+                                                    overflow-y: auto;
+                                                    font-size: 12px;
+                                                }
+
+                                                .analysis-table {
+                                                    width: 100%;
+                                                    border-collapse: collapse;
+                                                    color: grey;
+                                                    font-family: sans-serif;
+                                                }
+
+                                                .analysis-table th, .analysis-table td {
+                                                    border: 1px solid grey;
+                                                    padding: 4px 6px;
+                                                    text-align: center;
+                                                }
+
+                                                .analysis-table th {
+                                                    background-color: #111111;
+                                                    color: #ffffff;
+                                                }
 
                 /* Grid fills the left panel entirely */
                         .grid-container {
@@ -164,19 +187,28 @@
                     const flashTextEl = document.getElementById('flash-text');
                     const analysisPanel = document.getElementById('analysis-panel');
                     const totalCells = 24 * 60; 
-                let isCurrentGrid300 = false;
-                let activeMainBox = 1;
-                let simInterval = null;
+                    let isCurrentGrid300 = false;
+                    let activeMainBox = 1;
+                    let simInterval = null;
+                    let tableBodyEl = null;
 
-                function renderGrid(count, isSubGrid) {
-                                                if (simInterval) {
-                                                    clearInterval(simInterval);
-                                                    simInterval = null;
-                                                }
-                                                isCurrentGrid300 = isSubGrid;
-                                                gridContainer.innerHTML = '';
-                                                analysisPanel.innerHTML = ''; // Clear logs when swapping grids
-                                                rowNumbersEl.innerHTML = ''; // Clear row numbers
+                    function renderGrid(count, isSubGrid) {
+                                    if (simInterval) {
+                                        clearInterval(simInterval);
+                                        simInterval = null;
+                                    }
+                                    isCurrentGrid300 = isSubGrid;
+                                    gridContainer.innerHTML = '';
+                                    analysisPanel.innerHTML = ''; // Clear logs when swapping grids
+                                    rowNumbersEl.innerHTML = ''; // Clear row numbers
+
+                                    if (isSubGrid) {
+                                        const table = document.createElement('table');
+                                        table.className = 'analysis-table';
+                                        table.innerHTML = '<thead><tr><th>Row</th><th>Range</th><th>Color</th></tr></thead><tbody></tbody>';
+                                        analysisPanel.appendChild(table);
+                                        tableBodyEl = table.querySelector('tbody');
+                                    }
             
                                     if (isSubGrid) {
                         gridContainer.classList.add('grid-300');
@@ -254,16 +286,16 @@
                                         rowStates[row].streak++;
                                     } else {
                                         // If it's a break (and not the very first tick of the row)
-                                        if (rowStates[row].color !== null) {
-                                            const logLine = document.createElement('div');
-                                            const endCol = col - 1;
-                            
-                                            logLine.textContent = `Row ${row + 1}: B${rowStates[row].startCol}-B${endCol}`;
-                                            logLine.style.color = tickColor; // Color the text with the breaking tick's color
-                            
-                                            analysisPanel.appendChild(logLine);
-                                            analysisPanel.scrollTop = analysisPanel.scrollHeight; // Auto-scroll to bottom
-                                        }
+                                                                                if (rowStates[row].color !== null && tableBodyEl) {
+                                                                                    const endCol = col - 1;
+                                                                                    const tr = document.createElement('tr');
+                                                                                    const isGreen = tickColor === '#00ff00';
+                                            
+                                                                                    tr.innerHTML = `<td>Row ${row + 1}</td><td>B${rowStates[row].startCol}-B${endCol}</td><td style="color: ${tickColor}; font-weight: bold;">${isGreen ? 'GREEN' : 'RED'}</td>`;
+                                            
+                                                                                    tableBodyEl.appendChild(tr);
+                                                                                    analysisPanel.scrollTop = analysisPanel.scrollHeight; // Auto-scroll to bottom
+                                                                                }
                         
                                         rowStates[row].streak = 1;
                                         rowStates[row].color = tickColor;
