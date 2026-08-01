@@ -65,18 +65,36 @@
     <div class="right-panel"></div>
 
     <script>
-        const gridContainer = document.getElementById('matrix-grid');
-        const totalCells = 24 * 60; 
-        const fragment = document.createDocumentFragment();
+            const gridContainer = document.getElementById('matrix-grid');
+            const totalCells = 24 * 60; 
 
-        for (let i = 0; i < totalCells; i++) {
-            const cell = document.createElement('div');
-            cell.className = 'grid-cell';
-            fragment.appendChild(cell);
-        }
+            function renderGrid(count, isSubGrid) {
+                gridContainer.innerHTML = '';
+            
+                if (isSubGrid) {
+                    gridContainer.classList.add('grid-300');
+                } else {
+                    gridContainer.classList.remove('grid-300');
+                }
+            
+                const fragment = document.createDocumentFragment();
+                for (let i = 0; i < count; i++) {
+                    const cell = document.createElement('div');
+                    cell.className = 'grid-cell';
+                    fragment.appendChild(cell);
+                }
+            
+                gridContainer.appendChild(fragment);
+            }
 
-        gridContainer.appendChild(fragment);
-    </script>
+            gridContainer.addEventListener('click', function(e) {
+                if (e.target.classList.contains('grid-cell') && !gridContainer.classList.contains('grid-300')) {
+                    renderGrid(300, true);
+                }
+            });
+
+            renderGrid(totalCells, false);
+        </script>
 
 </body>
 </html>
