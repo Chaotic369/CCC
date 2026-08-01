@@ -147,8 +147,11 @@
                 let simInterval = null;
 
                 function renderGrid(count, isSubGrid) {
-                                if (simInterval) clearInterval(simInterval);
-                                isCurrentGrid300 = isSubGrid;
+                                                if (simInterval) {
+                                                    clearInterval(simInterval);
+                                                    simInterval = null;
+                                                }
+                                                isCurrentGrid300 = isSubGrid;
                                 gridContainer.innerHTML = '';
                                 analysisPanel.innerHTML = ''; // Clear logs when swapping grids
             
