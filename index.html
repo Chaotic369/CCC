@@ -180,11 +180,10 @@
                                         if (isSubGrid) {
                                             flashTextEl.textContent = 'BOX ' + activeMainBox;
                                             toggleBtn.textContent = 'Next Box Grid';
-                                            analyseBtn.style.display = 'block'; // Show Analyse button
+                                            startSimulation();
                                         } else {
                                             flashTextEl.textContent = 'MAIN GRID';
                                             toggleBtn.textContent = 'Open Box Grid';
-                                            analyseBtn.style.display = 'none'; // Hide Analyse button
                                         }
             
                     flashTextEl.style.animation = 'none';
