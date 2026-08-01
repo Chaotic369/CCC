@@ -202,10 +202,11 @@
                                 const rowStates = Array.from({ length: 20 }, () => ({ color: null, streak: 0, startCol: 1 }));
                 
                                 simInterval = setInterval(() => {
-                                    if (currentTick >= 300) {
-                                        clearInterval(simInterval);
-                                        return;
-                                    }
+                                                                    if (currentTick >= 300) {
+                                                                        clearInterval(simInterval);
+                                                                        simInterval = null;
+                                                                        return;
+                                                                    }
                     
                                     // Random tick: green (up) or red (down)
                                     const isGreen = Math.random() > 0.5;
