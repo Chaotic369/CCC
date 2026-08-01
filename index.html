@@ -260,18 +260,29 @@
             });
 
             toggleBtn.addEventListener('click', function() {
-                if (isCurrentGrid300) {
-                    // If already in a sub-grid, cycle to the next box's grid
-                    activeMainBox++;
-                    if (activeMainBox > totalCells) activeMainBox = 1;
-                    renderGrid(300, true);
-                } else {
-                    // Open the grid for whatever box was active last (default 1)
-                    renderGrid(300, true);
-                }
-            });
+                            if (isCurrentGrid300) {
+                                // If already in a sub-grid, cycle to the next box's grid
+                                activeMainBox++;
+                                if (activeMainBox > totalCells) activeMainBox = 1;
+                                renderGrid(300, true);
+                            } else {
+                                // Open the grid for whatever box was active last (default 1)
+                                renderGrid(300, true);
+                            }
+                        });
 
-            renderGrid(totalCells, false);
+                        analyseBtn.addEventListener('click', function() {
+                            if (isCurrentGrid300 && !simInterval) {
+                                // Clear the grid dynamically before starting a fresh analysis
+                                const cells = gridContainer.querySelectorAll('.grid-cell');
+                                cells.forEach(cell => { cell.textContent = ''; cell.style.color = ''; });
+                                analysisPanel.innerHTML = '';
+                    
+                                startSimulation();
+                            }
+                        });
+
+                        renderGrid(totalCells, false);
         </script>
 
 </body>
