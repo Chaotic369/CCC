@@ -268,17 +268,6 @@
                             }
                         });
 
-                        analyseBtn.addEventListener('click', function() {
-                            if (isCurrentGrid300 && !simInterval) {
-                                // Clear the grid dynamically before starting a fresh analysis
-                                const cells = gridContainer.querySelectorAll('.grid-cell');
-                                cells.forEach(cell => { cell.textContent = ''; cell.style.color = ''; });
-                                analysisPanel.innerHTML = '';
-                    
-                                startSimulation();
-                            }
-                        });
-
                         renderGrid(totalCells, false);
         </script>
 
