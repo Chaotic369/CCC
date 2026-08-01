@@ -179,14 +179,15 @@
                     gridContainer.appendChild(fragment);
 
                     // Handle the Flash Text Overlay
-                    if (isSubGrid) {
-                        flashTextEl.textContent = 'BOX ' + activeMainBox;
-                        toggleBtn.textContent = 'Next Box Grid';
-                        startSimulation();
-                    } else {
-                        flashTextEl.textContent = 'MAIN GRID';
-                        toggleBtn.textContent = 'Open Box Grid';
-                    }
+                                        if (isSubGrid) {
+                                            flashTextEl.textContent = 'BOX ' + activeMainBox;
+                                            toggleBtn.textContent = 'Next Box Grid';
+                                            analyseBtn.style.display = 'block'; // Show Analyse button
+                                        } else {
+                                            flashTextEl.textContent = 'MAIN GRID';
+                                            toggleBtn.textContent = 'Open Box Grid';
+                                            analyseBtn.style.display = 'none'; // Hide Analyse button
+                                        }
             
                     flashTextEl.style.animation = 'none';
                     void flashTextEl.offsetWidth; // Trigger reflow to restart animation
