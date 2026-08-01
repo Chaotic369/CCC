@@ -236,40 +236,10 @@
                                     cell.style.fontWeight = 'bold';
                     
                                     currentTick++;
-                                }, 1000); // 1 tick per second
-                            }, () => ({ color: null, streak: 0 }));
-                
-                                simInterval = setInterval(() => {
-                                    if (currentTick >= 300) {
-                                        clearInterval(simInterval);
-                                        return;
-                                    }
-                    
-                                    // Random tick: green (up) or red (down)
-                                    const isGreen = Math.random() > 0.5;
-                                    const tickColor = isGreen ? '#00ff00' : '#ff0000';
-                    
-                                    // Calculate which row this tick falls into (0 to 19)
-                                    const row = currentTick % 20;
-                    
-                                    // Check the streak horizontally (compare with the last state of this specific row)
-                                    if (rowStates[row].color === tickColor) {
-                                        rowStates[row].streak++;
-                                    } else {
-                                        rowStates[row].streak = 1;
-                                        rowStates[row].color = tickColor;
-                                    }
-                    
-                                    const cell = cells[currentTick];
-                                    cell.textContent = 'x' + rowStates[row].streak;
-                                    cell.style.color = tickColor;
-                                    cell.style.fontWeight = 'bold';
-                    
-                                    currentTick++;
-                                }, 1000); // 1 tick per second
-                            }
+                                                                    }, 1000); // 1 tick per second
+                                                                }
 
-            gridContainer.addEventListener('click', function(e) {
+                                                gridContainer.addEventListener('click', function(e) {
                 if (e.target.classList.contains('grid-cell')) {
                     if (!isCurrentGrid300) {
                         // Clicked a main grid box -> go to its 300 grid
