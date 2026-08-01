@@ -15,13 +15,35 @@
         }
 
         /* Left section strictly 75%, completely flush */
-        .left-panel {
-            width: 75%;
-            height: 100%;
-            /* Padding removed for edge-to-edge fit */
-        }
+                .left-panel {
+                    width: 75%;
+                    height: 100%;
+                    position: relative; /* Added for the flash text overlay */
+                }
 
-        /* Right section 25% */
+                /* The new text flash overlay */
+                #flash-text {
+                    position: absolute;
+                    top: 50%;
+                    left: 50%;
+                    transform: translate(-50%, -50%);
+                    color: white;
+                    font-family: sans-serif;
+                    font-size: 8vw;
+                    font-weight: bold;
+                    pointer-events: none; /* So it doesn't block your clicks */
+                    opacity: 0;
+                    text-shadow: 0 0 20px rgba(255,255,255,0.5);
+                    z-index: 10;
+                }
+
+                @keyframes flashTextAnim {
+                    0% { opacity: 1; transform: translate(-50%, -50%) scale(0.8); }
+                    20% { opacity: 1; transform: translate(-50%, -50%) scale(1.1); }
+                    100% { opacity: 0; transform: translate(-50%, -50%) scale(1.5); }
+                }
+
+                /* Right section 25% */
                 .right-panel {
                     width: 25%;
                     height: 100%;
@@ -72,21 +94,12 @@
                 }
 
                 .grid-cell:hover {
-                    background-color: #ffffff;
-                    color: #000000;
-                    transition: all 0.1s;
-                }
+                            background-color: #ffffff;
+                            color: #000000;
+                            transition: all 0.1s;
+                        }
 
-                @keyframes flashAnim {
-                    0% { background-color: #ffffff; color: #000000; }
-                    100% { background-color: #000000; color: grey; }
-                }
-
-                .flash {
-                    animation: flashAnim 0.5s ease-out;
-                }
-
-                /* 300 boxes grid: 15 cols x 20 rows = 300 */
+                        /* 300 boxes grid: 15 cols x 20 rows = 300 */
                 .grid-container.grid-300 {
                     grid-template-columns: repeat(15, 1fr);
                     grid-template-rows: repeat(20, 1fr);
