@@ -79,11 +79,141 @@
                                                     height: 100%;
                                                     display: flex;
                                                     flex-direction: column;
-                                                    align-items: center;
-                                                    padding-top: 10px;
                                                     box-sizing: border-box;
                                                     font-family: sans-serif;
                                                     background-color: #000000;
+                                                    border-left: 2px solid #333;
+                                                }
+
+                                                .dash-header {
+                                                    text-align: center;
+                                                    color: #ffd700;
+                                                    font-size: 20px;
+                                                    font-weight: bold;
+                                                    padding: 15px 0 10px 0;
+                                                    border-bottom: 1px solid #333;
+                                                    letter-spacing: 2px;
+                                                }
+
+                                                .control-bar {
+                                                    padding: 10px;
+                                                    border-bottom: 1px solid #333;
+                                                    display: flex;
+                                                    flex-direction: column;
+                                                    gap: 10px;
+                                                }
+
+                                                .control-row {
+                                                    display: flex;
+                                                    justify-content: space-between;
+                                                    align-items: center;
+                                                    gap: 5px;
+                                                }
+
+                                                .ctrl-btn {
+                                                    background: transparent;
+                                                    border: 1px solid grey;
+                                                    color: grey;
+                                                    padding: 4px 8px;
+                                                    font-size: 11px;
+                                                    cursor: pointer;
+                                                    flex: 1;
+                                                    text-align: center;
+                                                    transition: all 0.2s;
+                                                }
+
+                                                .ctrl-btn.active {
+                                                    background: grey;
+                                                    color: black;
+                                                    font-weight: bold;
+                                                }
+
+                                                .sens-slider {
+                                                    width: 50%;
+                                                    accent-color: #ffd700;
+                                                    cursor: pointer;
+                                                }
+
+                                                .signal-tables {
+                                                    flex: 1;
+                                                    overflow-y: auto;
+                                                    padding: 15px 10px;
+                                                    display: flex;
+                                                    flex-direction: column;
+                                                    gap: 20px;
+                                                }
+
+                                                .table-title {
+                                                    font-size: 14px;
+                                                    font-weight: bold;
+                                                    margin-bottom: 5px;
+                                                    text-align: center;
+                                                    letter-spacing: 1px;
+                                                }
+
+                                                .pink-text { color: #ff00ff; }
+                                                .cyan-text { color: #00ffff; }
+
+                                                .sig-table {
+                                                    display: grid;
+                                                    grid-template-columns: 1fr 1fr 1.2fr 1fr 1fr;
+                                                    gap: 1px;
+                                                    background-color: #333;
+                                                    border: 1px solid #333;
+                                                }
+
+                                                .sig-table > div {
+                                                    background-color: #000;
+                                                    padding: 6px 2px;
+                                                    text-align: center;
+                                                    font-size: 11px;
+                                                    color: #ccc;
+                                                    display: flex;
+                                                    align-items: center;
+                                                    justify-content: center;
+                                                }
+
+                                                .sig-table .th {
+                                                    font-weight: bold;
+                                                    background-color: #111;
+                                                    color: #fff;
+                                                }
+
+                                                .pink-table .highlight { color: #ff00ff; font-weight: bold; }
+                                                .cyan-table .highlight { color: #00ffff; font-weight: bold; }
+
+                                                .status-footer {
+                                                    border-top: 1px solid #333;
+                                                    padding: 10px;
+                                                    font-size: 11px;
+                                                    color: grey;
+                                                    display: flex;
+                                                    flex-direction: column;
+                                                    gap: 8px;
+                                                    background-color: #0a0a0a;
+                                                }
+                                
+                                                .status-footer .time-display {
+                                                    text-align: center;
+                                                    color: #fff;
+                                                    font-family: monospace;
+                                                    font-size: 13px;
+                                                }
+
+                                                .status-footer .thresholds {
+                                                    text-align: center;
+                                                    letter-spacing: 1px;
+                                                }
+
+                                                .status-badge {
+                                                    background-color: #003300;
+                                                    color: #00ff00;
+                                                    text-align: center;
+                                                    padding: 6px;
+                                                    border-radius: 3px;
+                                                    font-weight: bold;
+                                                    letter-spacing: 2px;
+                                                    border: 1px solid #00ff00;
                                                 }
 
                 /* Grid fills the left panel entirely */
@@ -133,7 +263,47 @@
             </div>
 
     <div class="right-panel">
-                    </div>
+            <div class="dash-header">XAUUSD PRO</div>
+        
+            <div class="control-bar">
+                <div class="control-row">
+                    <button class="ctrl-btn">BS %</button>
+                    <button class="ctrl-btn active">1s</button>
+                    <button class="ctrl-btn">5s</button>
+                    <button class="ctrl-btn">1m</button>
+                </div>
+                <div class="control-row">
+                    <!-- Both Reversal and Momentum active by default per requirements -->
+                    <button class="ctrl-btn active">REV</button>
+                    <button class="ctrl-btn active">MOM</button>
+                    <input type="range" min="1" max="100" value="75" class="sens-slider" title="Sensitivity">
+                </div>
+            </div>
+
+            <div class="signal-tables">
+                <div class="table-title pink-text">REVERSAL</div>
+                <div class="sig-table pink-table">
+                    <div class="th">C/R</div><div class="th">VOL</div><div class="th">STRK</div><div class="th">VARS</div><div class="th">WIN%</div>
+                    <!-- Simulated Live Data Rows -->
+                    <div class="td">C117</div><div class="td">1.2k</div><div class="td">X4-X5</div><div class="td">N:22</div><div class="td highlight">91%</div>
+                    <div class="td">R100</div><div class="td">0.8k</div><div class="td">X3-X4</div><div class="td">N:18</div><div class="td highlight">86%</div>
+                </div>
+
+                <div class="table-title cyan-text">MOMENTUM</div>
+                <div class="sig-table cyan-table">
+                    <div class="th">C/R</div><div class="th">VOL</div><div class="th">STRK</div><div class="th">VARS</div><div class="th">WIN%</div>
+                    <!-- Simulated Live Data Rows -->
+                    <div class="td">C112</div><div class="td">3.1k</div><div class="td">X6-X7</div><div class="td">N:14</div><div class="td highlight">94%</div>
+                    <div class="td">R105</div><div class="td">2.2k</div><div class="td">X5-X6</div><div class="td">N:19</div><div class="td highlight">82%</div>
+                </div>
+            </div>
+
+            <div class="status-footer">
+                <div class="time-display" id="time-display">IST: --:--:-- | NY: --:--:--</div>
+                <div class="thresholds">MIN: 61 | MAX: 120</div>
+                <div class="status-badge">LIVE 24x7</div>
+            </div>
+        </div>
 
     <script>
                     const gridContainer = document.getElementById('matrix-grid');
@@ -254,7 +424,23 @@
             });
 
             renderGrid(totalCells, false);
-        </script>
+
+                                    function updateClocks() {
+                                        const now = new Date();
+                                        // IST is UTC+5:30 (Jamshedpur local time)
+                                        const ist = now.toLocaleTimeString('en-US', { timeZone: 'Asia/Kolkata', hour12: false, hour: '2-digit', minute:'2-digit', second:'2-digit' });
+                                        // EST/EDT for New York session tracking
+                                        const est = now.toLocaleTimeString('en-US', { timeZone: 'America/New_York', hour12: false, hour: '2-digit', minute:'2-digit', second:'2-digit' });
+                            
+                                        const timeDisplay = document.getElementById('time-display');
+                                        if (timeDisplay) {
+                                            timeDisplay.textContent = `IST: ${ist} | NY: ${est}`;
+                                        }
+                                    }
+                        
+                                    setInterval(updateClocks, 1000);
+                                    updateClocks();
+                    </script>
 
 </body>
 </html>
