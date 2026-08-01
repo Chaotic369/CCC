@@ -171,36 +171,41 @@
                 }
 
                 function startSimulation() {
-                    let currentTick = 0;
-                    let currentStreak = 0;
-                    let lastColor = null;
-                    const cells = gridContainer.querySelectorAll('.grid-cell');
+                                let currentTick = 0;
+                                const cells = gridContainer.querySelectorAll('.grid-cell');
                 
-                    simInterval = setInterval(() => {
-                        if (currentTick >= 300) {
-                            clearInterval(simInterval);
-                            return;
-                        }
+                                // Track the color and streak independently for each of the 20 rows
+                                const rowStates = Array.from({ length: 20 }, () => ({ color: null, streak: 0 }));
+                
+                                simInterval = setInterval(() => {
+                                    if (currentTick >= 300) {
+                                        clearInterval(simInterval);
+                                        return;
+                                    }
                     
-                        // Random tick: green (up) or red (down)
-                        const isGreen = Math.random() > 0.5;
-                        const tickColor = isGreen ? '#00ff00' : '#ff0000';
+                                    // Random tick: green (up) or red (down)
+                                    const isGreen = Math.random() > 0.5;
+                                    const tickColor = isGreen ? '#00ff00' : '#ff0000';
                     
-                        if (lastColor === tickColor) {
-                            currentStreak++;
-                        } else {
-                            currentStreak = 1;
-                            lastColor = tickColor;
-                        }
+                                    // Calculate which row this tick falls into (0 to 19)
+                                    const row = currentTick % 20;
                     
-                        const cell = cells[currentTick];
-                        cell.textContent = 'x' + currentStreak;
-                        cell.style.color = tickColor;
-                        cell.style.fontWeight = 'bold';
+                                    // Check the streak horizontally (compare with the last state of this specific row)
+                                    if (rowStates[row].color === tickColor) {
+                                        rowStates[row].streak++;
+                                    } else {
+                                        rowStates[row].streak = 1;
+                                        rowStates[row].color = tickColor;
+                                    }
                     
-                        currentTick++;
-                    }, 1000); // 1 tick per second
-                }
+                                    const cell = cells[currentTick];
+                                    cell.textContent = 'x' + rowStates[row].streak;
+                                    cell.style.color = tickColor;
+                                    cell.style.fontWeight = 'bold';
+                    
+                                    currentTick++;
+                                }, 1000); // 1 tick per second
+                            }
 
             gridContainer.addEventListener('click', function(e) {
                 if (e.target.classList.contains('grid-cell')) {
