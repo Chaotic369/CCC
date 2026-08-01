@@ -21,13 +21,33 @@
             /* Padding removed for edge-to-edge fit */
         }
 
-        /* Right section 25%, completely empty */
-        .right-panel {
-            width: 25%;
-            height: 100%;
-        }
+        /* Right section 25% */
+                .right-panel {
+                    width: 25%;
+                    height: 100%;
+                    display: flex;
+                    justify-content: center;
+                    padding-top: 20px;
+                    box-sizing: border-box;
+                }
 
-        /* Grid fills the left panel entirely */
+                #toggle-btn {
+                    background-color: transparent;
+                    color: grey;
+                    border: 1px solid grey;
+                    padding: 10px 20px;
+                    cursor: pointer;
+                    font-size: 14px;
+                    height: fit-content;
+                    font-family: sans-serif;
+                }
+        
+                #toggle-btn:hover {
+                    background-color: grey;
+                    color: black;
+                }
+
+                /* Grid fills the left panel entirely */
         .grid-container {
             display: grid;
             grid-template-columns: repeat(24, 1fr);
