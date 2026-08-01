@@ -133,41 +133,27 @@
             </div>
 
     <div class="right-panel">
-                    <button id="toggle-btn">Toggle Grid</button>
-                    <div id="analysis-panel"></div>
-                </div>
+                    </div>
 
     <script>
                     const gridContainer = document.getElementById('matrix-grid');
-                    const rowNumbersEl = document.getElementById('row-numbers');
-                    const toggleBtn = document.getElementById('toggle-btn');
-                    const flashTextEl = document.getElementById('flash-text');
-                    const analysisPanel = document.getElementById('analysis-panel');
-                    const totalCells = 24 * 60; 
-                    let isCurrentGrid300 = false;
-                    let activeMainBox = 1;
-                    let simInterval = null;
-                    let tableBodyEl = null;
+                                        const rowNumbersEl = document.getElementById('row-numbers');
+                                        const flashTextEl = document.getElementById('flash-text');
+                                        const totalCells = 24 * 60; 
+                                        let isCurrentGrid300 = false;
+                                        let activeMainBox = 1;
+                                        let simInterval = null;
 
-                    function renderGrid(count, isSubGrid) {
+                                        function renderGrid(count, isSubGrid) {
                                     if (simInterval) {
-                                        clearInterval(simInterval);
-                                        simInterval = null;
-                                    }
-                                    isCurrentGrid300 = isSubGrid;
-                                    gridContainer.innerHTML = '';
-                                    analysisPanel.innerHTML = ''; // Clear logs when swapping grids
-                                    rowNumbersEl.innerHTML = ''; // Clear row numbers
-
-                                    if (isSubGrid) {
-                                        const table = document.createElement('table');
-                                        table.className = 'analysis-table';
-                                        table.innerHTML = '<thead><tr><th>Row</th><th>Range</th><th>Color</th></tr></thead><tbody></tbody>';
-                                        analysisPanel.appendChild(table);
-                                        tableBodyEl = table.querySelector('tbody');
-                                    }
+                                                                            clearInterval(simInterval);
+                                                                            simInterval = null;
+                                                                        }
+                                                                        isCurrentGrid300 = isSubGrid;
+                                                                        gridContainer.innerHTML = '';
+                                                                        rowNumbersEl.innerHTML = ''; // Clear row numbers
             
-                                    if (isSubGrid) {
+                                                                        if (isSubGrid) {
                         gridContainer.classList.add('grid-300');
                     } else {
                         gridContainer.classList.remove('grid-300');
@@ -202,14 +188,12 @@
                                         rowNumbersEl.appendChild(rowFragment);
 
                                         // Handle the Flash Text Overlay
-                                        if (isSubGrid) {
-                                            flashTextEl.textContent = 'BOX ' + activeMainBox;
-                                            toggleBtn.textContent = 'Next Box Grid';
-                                            startSimulation();
-                                        } else {
-                                            flashTextEl.textContent = 'MAIN GRID';
-                                            toggleBtn.textContent = 'Open Box Grid';
-                                        }
+                                                                                if (isSubGrid) {
+                                                                                    flashTextEl.textContent = 'BOX ' + activeMainBox;
+                                                                                    startSimulation();
+                                                                                } else {
+                                                                                    flashTextEl.textContent = 'MAIN GRID';
+                                                                                }
             
                     flashTextEl.style.animation = 'none';
                     void flashTextEl.offsetWidth; // Trigger reflow to restart animation
@@ -239,25 +223,13 @@
                                                                     const col = Math.floor(currentTick / 60) + 1;
                     
                                     // Check the streak horizontally (compare with the last state of this specific row)
-                                    if (rowStates[row].color === tickColor) {
-                                        rowStates[row].streak++;
-                                    } else {
-                                        // If it's a break (and not the very first tick of the row)
-                                                                                if (rowStates[row].color !== null && tableBodyEl) {
-                                                                                    const endCol = col - 1;
-                                                                                    const tr = document.createElement('tr');
-                                                                                    const isGreen = tickColor === '#00ff00';
-                                            
-                                                                                    tr.innerHTML = `<td>Row ${row + 1}</td><td>B${rowStates[row].startCol}-B${endCol}</td><td style="color: ${tickColor}; font-weight: bold;">${isGreen ? 'GREEN' : 'RED'}</td>`;
-                                            
-                                                                                    tableBodyEl.appendChild(tr);
-                                                                                    analysisPanel.scrollTop = analysisPanel.scrollHeight; // Auto-scroll to bottom
-                                                                                }
-                        
-                                        rowStates[row].streak = 1;
-                                        rowStates[row].color = tickColor;
-                                        rowStates[row].startCol = col;
-                                    }
+                                                                        if (rowStates[row].color === tickColor) {
+                                                                            rowStates[row].streak++;
+                                                                        } else {
+                                                                            rowStates[row].streak = 1;
+                                                                            rowStates[row].color = tickColor;
+                                                                            rowStates[row].startCol = col;
+                                                                        }
                     
                                     const cell = cells[currentTick];
                                     cell.textContent = 'x' + rowStates[row].streak;
@@ -281,19 +253,7 @@
                 }
             });
 
-            toggleBtn.addEventListener('click', function() {
-                            if (isCurrentGrid300) {
-                                // If already in a sub-grid, cycle to the next box's grid
-                                activeMainBox++;
-                                if (activeMainBox > totalCells) activeMainBox = 1;
-                                renderGrid(300, true);
-                            } else {
-                                // Open the grid for whatever box was active last (default 1)
-                                renderGrid(300, true);
-                            }
-                        });
-
-                        renderGrid(totalCells, false);
+            renderGrid(totalCells, false);
         </script>
 
 </body>
