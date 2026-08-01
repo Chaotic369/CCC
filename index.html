@@ -44,30 +44,45 @@
                 }
 
                 /* Right section 25% */
-                .right-panel {
-                    width: 25%;
-                    height: 100%;
-                    display: flex;
-                    justify-content: center;
-                    padding-top: 20px;
-                    box-sizing: border-box;
-                }
+                                .right-panel {
+                                    width: 25%;
+                                    height: 100%;
+                                    display: flex;
+                                    flex-direction: column;
+                                    align-items: center;
+                                    padding-top: 10px;
+                                    box-sizing: border-box;
+                                    font-family: sans-serif;
+                                }
 
-                #toggle-btn {
-                    background-color: transparent;
-                    color: grey;
-                    border: 1px solid grey;
-                    padding: 10px 20px;
-                    cursor: pointer;
-                    font-size: 14px;
-                    height: fit-content;
-                    font-family: sans-serif;
-                }
+                                #toggle-btn {
+                                    background-color: transparent;
+                                    color: grey;
+                                    border: 1px solid grey;
+                                    padding: 5px 10px; /* Made smaller */
+                                    cursor: pointer;
+                                    font-size: 12px; /* Made smaller */
+                                    height: fit-content;
+                                    margin-bottom: 10px;
+                                }
         
-                #toggle-btn:hover {
-                    background-color: grey;
-                    color: black;
-                }
+                                #toggle-btn:hover {
+                                    background-color: grey;
+                                    color: black;
+                                }
+
+                                /* Analysis Log Container */
+                                #analysis-panel {
+                                    width: 100%;
+                                    flex-grow: 1;
+                                    padding: 10px;
+                                    box-sizing: border-box;
+                                    overflow-y: auto;
+                                    font-size: 13px;
+                                    display: flex;
+                                    flex-direction: column;
+                                    gap: 6px;
+                                }
 
                 /* Grid fills the left panel entirely */
         .grid-container {
