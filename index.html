@@ -15,11 +15,33 @@
         }
 
         /* Left section strictly 75%, completely flush */
-                .left-panel {
-                    width: 75%;
-                    height: 100%;
-                    position: relative; /* Added for the flash text overlay */
-                }
+                        .left-panel {
+                            width: 75%;
+                            height: 100%;
+                            position: relative; /* Added for the flash text overlay */
+                            display: flex; /* Flex layout to keep row numbers and grid side-by-side */
+                        }
+
+                        #row-numbers {
+                            width: 40px;
+                            height: 100%;
+                            border-right: 3px solid grey; /* Bold separation line */
+                            display: flex;
+                            flex-direction: column;
+                            box-sizing: border-box;
+                            background-color: #000000;
+                            z-index: 5;
+                        }
+
+                        .row-number {
+                            flex: 1;
+                            display: flex;
+                            align-items: center;
+                            justify-content: center;
+                            color: grey;
+                            font-size: min(1vw, 1.2vh);
+                            font-family: sans-serif;
+                        }
 
                 /* The new text flash overlay */
                 #flash-text {
@@ -85,14 +107,14 @@
                                 }
 
                 /* Grid fills the left panel entirely */
-        .grid-container {
-            display: grid;
-            grid-template-columns: repeat(24, 1fr);
-            grid-template-rows: repeat(60, 1fr);
-            width: 100%;
-            height: 100%;
-            /* Gap removed to keep edges completely tight */
-        }
+                        .grid-container {
+                            display: grid;
+                            grid-template-columns: repeat(24, 1fr);
+                            grid-template-rows: repeat(60, 1fr);
+                            flex: 1; /* Takes the remaining space dynamically next to row-numbers */
+                            height: 100%;
+                            /* Gap removed to keep edges completely tight */
+                        }
 
         /* Grid cells compress/stretch into rectangles automatically */
                 .grid-cell {
@@ -125,9 +147,10 @@
 <body>
 
     <div class="left-panel">
-            <div id="flash-text"></div>
-            <div class="grid-container" id="matrix-grid"></div>
-        </div>
+                <div id="row-numbers"></div>
+                <div id="flash-text"></div>
+                <div class="grid-container" id="matrix-grid"></div>
+            </div>
 
     <div class="right-panel">
                     <button id="toggle-btn">Toggle Grid</button>
@@ -135,11 +158,12 @@
                 </div>
 
     <script>
-                const gridContainer = document.getElementById('matrix-grid');
-                const toggleBtn = document.getElementById('toggle-btn');
-                                const flashTextEl = document.getElementById('flash-text');
-                                const analysisPanel = document.getElementById('analysis-panel');
-                const totalCells = 24 * 60; 
+                    const gridContainer = document.getElementById('matrix-grid');
+                    const rowNumbersEl = document.getElementById('row-numbers');
+                    const toggleBtn = document.getElementById('toggle-btn');
+                    const flashTextEl = document.getElementById('flash-text');
+                    const analysisPanel = document.getElementById('analysis-panel');
+                    const totalCells = 24 * 60; 
                 let isCurrentGrid300 = false;
                 let activeMainBox = 1;
                 let simInterval = null;
@@ -150,10 +174,11 @@
                                                     simInterval = null;
                                                 }
                                                 isCurrentGrid300 = isSubGrid;
-                                gridContainer.innerHTML = '';
-                                analysisPanel.innerHTML = ''; // Clear logs when swapping grids
+                                                gridContainer.innerHTML = '';
+                                                analysisPanel.innerHTML = ''; // Clear logs when swapping grids
+                                                rowNumbersEl.innerHTML = ''; // Clear row numbers
             
-                    if (isSubGrid) {
+                                    if (isSubGrid) {
                         gridContainer.classList.add('grid-300');
                     } else {
                         gridContainer.classList.remove('grid-300');
