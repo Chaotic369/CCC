@@ -201,7 +201,18 @@
             
                     gridContainer.appendChild(fragment);
 
-                    // Handle the Flash Text Overlay
+                                        // Populate Row Numbers dynamically based on grid size
+                                        const numRows = isSubGrid ? 20 : 60;
+                                        const rowFragment = document.createDocumentFragment();
+                                        for (let r = 1; r <= numRows; r++) {
+                                            const rn = document.createElement('div');
+                                            rn.className = 'row-number';
+                                            rn.textContent = r;
+                                            rowFragment.appendChild(rn);
+                                        }
+                                        rowNumbersEl.appendChild(rowFragment);
+
+                                        // Handle the Flash Text Overlay
                                         if (isSubGrid) {
                                             flashTextEl.textContent = 'BOX ' + activeMainBox;
                                             toggleBtn.textContent = 'Next Box Grid';
