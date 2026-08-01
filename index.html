@@ -45,10 +45,16 @@
         }
 
         .grid-cell:hover {
-            background-color: rgba(255, 255, 255, 0.15);
-            transition: background-color 0.1s;
-        }
-    </style>
+                    background-color: rgba(255, 255, 255, 0.15);
+                    transition: background-color 0.1s;
+                }
+
+                /* 300 boxes grid: 15 cols x 20 rows = 300 */
+                .grid-container.grid-300 {
+                    grid-template-columns: repeat(15, 1fr);
+                    grid-template-rows: repeat(20, 1fr);
+                }
+            </style>
 </head>
 <body>
 
