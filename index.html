@@ -192,8 +192,52 @@
                                 let currentTick = 0;
                                 const cells = gridContainer.querySelectorAll('.grid-cell');
                 
-                                // Track the color and streak independently for each of the 20 rows
-                                const rowStates = Array.from({ length: 20 }, () => ({ color: null, streak: 0 }));
+                                // Track the color, streak, and start column independently for each of the 20 rows
+                                const rowStates = Array.from({ length: 20 }, () => ({ color: null, streak: 0, startCol: 1 }));
+                
+                                simInterval = setInterval(() => {
+                                    if (currentTick >= 300) {
+                                        clearInterval(simInterval);
+                                        return;
+                                    }
+                    
+                                    // Random tick: green (up) or red (down)
+                                    const isGreen = Math.random() > 0.5;
+                                    const tickColor = isGreen ? '#00ff00' : '#ff0000';
+                    
+                                    // Calculate which row (0-19) and col (1-15) this tick falls into
+                                    const row = currentTick % 20;
+                                    const col = Math.floor(currentTick / 20) + 1;
+                    
+                                    // Check the streak horizontally (compare with the last state of this specific row)
+                                    if (rowStates[row].color === tickColor) {
+                                        rowStates[row].streak++;
+                                    } else {
+                                        // If it's a break (and not the very first tick of the row)
+                                        if (rowStates[row].color !== null) {
+                                            const logLine = document.createElement('div');
+                                            const endCol = col - 1;
+                            
+                                            logLine.textContent = `Row ${row + 1}: B${rowStates[row].startCol}-B${endCol}`;
+                                            logLine.style.color = tickColor; // Color the text with the breaking tick's color
+                            
+                                            analysisPanel.appendChild(logLine);
+                                            analysisPanel.scrollTop = analysisPanel.scrollHeight; // Auto-scroll to bottom
+                                        }
+                        
+                                        rowStates[row].streak = 1;
+                                        rowStates[row].color = tickColor;
+                                        rowStates[row].startCol = col;
+                                    }
+                    
+                                    const cell = cells[currentTick];
+                                    cell.textContent = 'x' + rowStates[row].streak;
+                                    cell.style.color = tickColor;
+                                    cell.style.fontWeight = 'bold';
+                    
+                                    currentTick++;
+                                }, 1000); // 1 tick per second
+                            }, () => ({ color: null, streak: 0 }));
                 
                                 simInterval = setInterval(() => {
                                     if (currentTick >= 300) {
